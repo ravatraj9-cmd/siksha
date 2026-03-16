@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # Apni API Key yahan dalo
 genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c")
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 st.title("🤖 Siksha AI")
 
