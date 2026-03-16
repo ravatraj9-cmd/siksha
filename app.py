@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 
 # Sahi API Key yahan dalo
-genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c"transport='grpc')
+genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c")
 
 # Model ka ekdum sahi naam
 model = genai.GenerativeModel('gemini-1.5-flash-latest')
