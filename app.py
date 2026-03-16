@@ -5,7 +5,7 @@ import google.generativeai as genai
 genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c")
 
 # Model ka ekdum sahi naam
-modal= genai.GenerativeModel('models/gemini-1.5-flash')
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 st.title("🤖 Siksha AI")
 
