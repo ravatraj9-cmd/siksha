@@ -1,9 +1,11 @@
 import streamlit as st
 import google.generativeai as genai
 
-# Apni API Key yahan dalo
+# Sahi API Key yahan dalo
 genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c")
-model = genai.GenerativeModel('models/gemini-1.5-flash')
+
+# Model ka ekdum sahi naam
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 st.title("🤖 Siksha AI")
 
@@ -16,7 +18,11 @@ for msg in st.session_state.messages:
 if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
-    response = model.generate_content(prompt)
-    st.session_state.messages.append({"role": "assistant", "content": response.text})
-    st.chat_message("assistant").write(response.text)
-  
+    
+    try:
+        response = model.generate_content(prompt)
+        st.session_state.messages.append({"role": "assistant", "content": response.text})
+        st.chat_message("assistant").write(response.text)
+    except Exception as e:
+        st.error(f"Error: {e}")
+        
