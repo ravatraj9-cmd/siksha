@@ -1,37 +1,33 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai  # Naya tarika
 
-# Sahi API Key yahan dalo
-genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c")
-# API key ke baad ye daalein
-try:
-    print("--- Available Models List ---")
-    for m in genai.list_models():
-        if 'generateContent' in m.supported_generation_methods:
-            print(f"Model Name: {m.name}")
-    print("----------------------------")
-except Exception as e:
-    print(f"Error listing models: {e}")
-    
-# Model ka ekdum sahi naam
-model = genai.GenerativeModel('gemini-1.5-flash')
+# API Key yahan dalo
+client = genai.Client(api_key="AIzaSy...") 
 
 st.title("🤖 Siksha AI")
 
+# Session state setup
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Purani messages display karna
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
+# User input
 if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
-    
+
     try:
-        response = model.generate_content(prompt)
+        # Naya syntax response ke liye
+        response = client.models.generate_content(
+            model="gemini-1.5-flash", 
+            contents=prompt
+        )
+        
         st.session_state.messages.append({"role": "assistant", "content": response.text})
         st.chat_message("assistant").write(response.text)
+        
     except Exception as e:
         st.error(f"Error: {e}")
-        
