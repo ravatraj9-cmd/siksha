@@ -4,7 +4,7 @@ import json
 
 # --- API Key Setup ---
 # Note: Is code ko chalane ke baad apni API Key reset kar lena safety ke liye.
-API_KEY = "AIzaSyDU01njlqkmyk5ksY82SVCWW9DkovNNY1c"
+API_KEY = "AIzaSyCcF7CWPiB7XUP67nB08YZs8GiDuNWVt9k"
 
 # Latest Stable Model (March 2026 update)
 # Agar ye bhi na chale toh yahan 'gemini-2.0-flash' likh kar try karein
