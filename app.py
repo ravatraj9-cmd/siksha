@@ -3,9 +3,18 @@ import google.generativeai as genai
 
 # Sahi API Key yahan dalo
 genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c")
-
+# API key ke baad ye daalein
+try:
+    print("--- Available Models List ---")
+    for m in genai.list_models():
+        if 'generateContent' in m.supported_generation_methods:
+            print(f"Model Name: {m.name}")
+    print("----------------------------")
+except Exception as e:
+    print(f"Error listing models: {e}")
+    
 # Model ka ekdum sahi naam
-model = genai.GenerativeModel('models/gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 st.title("🤖 Siksha AI")
 
