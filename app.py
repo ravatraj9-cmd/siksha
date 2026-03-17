@@ -4,7 +4,7 @@ import json
 
 # --- API Key Setup ---
 # Nayi key banakar yahan zaroor daalna, purani shayad block ho gayi ho
-API_KEY = "YAHAN_APNI_NEW_KEY_DAALEIN"
+API_KEY = "AIzaSyD-EaJsd1Me8oOjsJrDoG09IjaCcbtDzRw"
 
 # 1. Sabse pehle ise try karein: "gemini-1.5-flash"
 # 2. Agar na chale toh ise try karein: "gemini-pro"
