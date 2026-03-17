@@ -2,7 +2,7 @@ import streamlit as st
 from google import genai  # Naya tarika
 
 # API Key yahan dalo
-client = genai.Client(api_key="AIzaSy...") 
+client = genai.Client(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c") 
 
 st.title("🤖 Siksha AI")
 
