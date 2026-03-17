@@ -1,42 +1,33 @@
 import streamlit as st
 import google.generativeai as genai
+from google.generativeai.types import RequestOptions
 
-# 1. API Configuration
-# Maine check kiya hai, ye key sahi format mein hai
+# 1. API Setup
 genai.configure(api_key="AIzaSyDUO1nj1qknykSksY82SVCAW0DkowNNY1c")
 
-# 2. Model Setup
-# 'gemini-pro' use kar rahe hain kyunki ye 0.5.4 library ke saath best chalta hai
-model = genai.GenerativeModel('gemini-pro')
+# 2. Model Setup (Version fix kiya hai taaki v1beta ka error na aaye)
+model = genai.GenerativeModel('gemini-1.5-flash')
 
-st.set_page_config(page_title="Siksha AI", page_icon="🤖")
 st.title("🤖 Siksha AI")
-st.caption("Powered by Google Gemini")
 
-# 3. Chat History Initialize
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# 4. Purani messages dikhana
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
-# 5. User Input
-if prompt := st.chat_input("Puchiye apna sawal..."):
-    # User ka message save aur display karo
+if prompt := st.chat_input("Puchiye..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
 
     try:
-        # AI se response mangwana
-        with st.spinner("Soch raha hoon..."):
-            response = model.generate_content(prompt)
-            
-            # Response ko screen par dikhana
-            st.session_state.messages.append({"role": "assistant", "content": response.text})
-            st.chat_message("assistant").write(response.text)
-            
-    except Exception as e:
-        # Agar koi error aaye toh yahan dikhega
-        st.error(f"Error aa gaya bhai: {e}")
+        # MAGIC LINE: Yahan hum version 'v1' force kar rahe hain
+        response = model.generate_content(
+            prompt, 
+            request_options=RequestOptions(api_version='v1')
+        )
         
+        st.session_state.messages.append({"role": "assistant", "content": response.text})
+        st.chat_message("assistant").write(response.text)
+    except Exception as e:
+        st.error(f"Error: {e}")
