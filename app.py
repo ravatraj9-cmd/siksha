@@ -3,16 +3,16 @@ import requests
 import json
 
 # --- API Key Setup ---
-# Note: Is code ko chalane ke baad apni API Key reset kar lena safety ke liye.
-API_KEY = "AIzaSyD-EaJsd1Me8oOjsJrDoG09IjaCcbtDzRw"
+# Apni API Key yahan quotes ke andar daalein
+API_KEY = "YAHAN_APNI_KEY_DAALEIN"
 
-# Latest Stable Model (March 2026 update)
-# Agar ye bhi na chale toh yahan 'gemini-2.0-flash' likh kar try karein
-MODEL_NAME = "gemini-3-flash"
-URL = f"https://generativelanguage.googleapis.com/v1/models/{MODEL_NAME}:generateContent?key={API_KEY}"
+# Is combination ko use karein, ye sabse stable hai
+MODEL_NAME = "gemini-1.5-flash"
+# Hum v1beta use kar rahe hain kyunki ye saare models support karta hai
+URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 
 st.set_page_config(page_title="Siksha AI", page_icon="🎓")
-st.title("🤖 Siksha AI (Latest Mode)")
+st.title("🤖 Siksha AI (Stable Mode)")
 
 # Chat History Initialize karna
 if "messages" not in st.session_state:
@@ -37,20 +37,22 @@ if prompt := st.chat_input("Puchiye..."):
     }
 
     try:
-        # Request bhejna
+        # API Request
         response = requests.post(URL, json=payload)
         result = response.json()
 
-        # Jawab nikalna
+        # Debugging ke liye (Optionally aap is line ko hata sakte hain)
         if "candidates" in result:
             ai_message = result["candidates"][0]["content"]["parts"][0]["text"]
             st.session_state.messages.append({"role": "assistant", "content": ai_message})
             with st.chat_message("assistant"):
                 st.write(ai_message)
         else:
-            # Agar Error aaye toh yahan dikhega
-            error_info = result.get('error', {}).get('message', 'Check your API Key or Model Access.')
-            st.error(f"API Error: {error_info}")
+            # Agar Error aaye toh details dikhayega
+            error_msg = result.get('error', {}).get('message', 'Model Access Issue')
+            st.error(f"API Error: {error_msg}")
+            st.info("Tip: Agar 'Not Found' aaye toh MODEL_NAME ko 'gemini-pro' karke dekhein.")
             
     except Exception as e:
         st.error(f"Connection Error: {e}")
+        
